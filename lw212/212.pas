@@ -3,35 +3,40 @@ PROGRAM Encryption(INPUT, OUTPUT);
   и печатает новые символы в OUTPUT}
 CONST
   Len = 20;
-  NewCode = ['A' .. 'Z'] + [' ']; 
+  NewCode = [' ' .. 'Z'];
+  ValidCode = [' ', 'A' .. 'Z']; 
 TYPE
-  Str = ARRAY [1 .. Len] OF 'A' .. 'Z';
+  Str = ARRAY [1 .. Len] OF ' ' .. 'Z';
   Chiper = ARRAY [' ' .. 'Z'] OF CHAR;
 VAR
   Msg: Str;
   Code: Chiper;
   Length: INTEGER;
   CodeFile: TEXT;
+  ErrorInFile: BOOLEAN;
   
-PROCEDURE Initialize(VAR Code: Chiper; VAR ChipperFile: TEXT);
+PROCEDURE Initialize(VAR Code: Chiper; VAR ChipperFile: TEXT; VAR Error: BOOLEAN);
 VAR
   Ch, CodeCh: CHAR;
 {присвоить Code шифр замены}
 BEGIN {Initialize}
-  WHILE NOT EOLN(ChipperFile)
+  Error := FALSE;
+  WHILE NOT EOF(ChipperFile) AND NOT(Error)
   DO
     BEGIN
-      IF (NOT EOLN(ChipperFile))
+      READ(ChipperFile, Ch);
+      IF (NOT EOLN(ChipperFile)) AND (Ch IN ValidCode)
       THEN
         BEGIN
-          READ(ChipperFile, Ch);
-          IF (NOT EOLN(ChipperFile))
+          READ(ChipperFile, CodeCh);
+          IF CodeCh IN NewCode
           THEN
-            BEGIN
-              READ(ChipperFile, CodeCh);
-              Code[Ch] := CodeCh
-            END 
-        END;
+            Code[Ch] := CodeCh
+          ELSE
+            Error := TRUE  
+        END
+      ELSE
+        Error := TRUE;     
       READLN(ChipperFile)  
     END
 END;  {Initialize}
@@ -56,27 +61,42 @@ BEGIN {Encode}
 END;  {Encode}
  
 BEGIN {Encryption}
+  ErrorInFile := FALSE;
   {Инициализировать Code}
   ASSIGN(CodeFile, 'ChiperFile.TXT');
   RESET(CodeFile);
-  Initialize(Code, CodeFile);
-  WHILE NOT EOF
-  DO
-    BEGIN
-      {читать строку в  Msg и распечатать ее}
-      Length := 0;
-      WHILE NOT EOLN AND (Length < Len)
-      DO
-        BEGIN
-          Length := Length + 1;
-          READ(Msg[Length]);
-          WRITE(Msg[Length])
-        END;
-      READLN;
-      WRITELN;
-      {Распечатать кодированное сообщение}
-      Encode(Msg, Length);
-      WRITELN('длинна входной строки = ', Length)
-    END
+  Initialize(Code, CodeFile, ErrorInFile);
+  IF NOT(ErrorInFile) 
+  THEN
+    WHILE NOT(EOF) AND NOT(ErrorInFile)
+    DO
+      BEGIN
+        {читать строку в  Msg и распечатать ее}
+        Length := 0;
+        WHILE NOT EOLN AND (Length < Len)
+        DO
+          BEGIN
+            Length := Length + 1;
+            READ(Msg[Length]);
+            IF Msg[Length] IN ValidCode
+            THEN
+              WRITE(Msg[Length])
+            ELSE
+              ErrorInFile := TRUE  
+          END;
+        READLN;
+        WRITELN;
+        {Распечатать кодированное сообщение}
+        IF NOT(ErrorInFile)
+        THEN
+          BEGIN
+            Encode(Msg, Length);
+            WRITELN('длинна входной строки = ', Length)
+          END
+        ELSE
+          WRITELN('Misstake')  
+      END
+  ELSE
+    WRITELN('Misstake')    
 END.  {Encryption}
 

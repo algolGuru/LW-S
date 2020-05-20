@@ -5,7 +5,7 @@ CONST
   Len = 20;
   NewCode = ['A' .. 'Z'] + [' ']; 
 TYPE
-  Str = ARRAY [1 .. Len] OF 'A' .. 'Z';
+  Str = ARRAY [1 .. Len] OF ' ' .. 'Z';
   Chiper = ARRAY [' ' .. 'Z'] OF CHAR;
 VAR
   Msg: Str;

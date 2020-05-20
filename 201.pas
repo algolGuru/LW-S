@@ -1,7 +1,9 @@
 PROGRAM Print(INPUT, OUTPUT);{Print}
 CONST
   Min = 1;
-  Max = 25;
+  RowSize = 5;
+  ColSize = 5;
+  Max = RowSize * ColSize;
 TYPE
   Matrix = SET OF Min .. Max;
 VAR 
@@ -22,13 +24,11 @@ BEGIN
             WRITE('#')
           ELSE
             WRITE(' ');
-          IF (I MOD 5) = 0
+          IF (I MOD RowSize) = 0
           THEN
             WRITELN
         END
     END 
-  ELSE
-    WRITELN('Char not found')
 END;{PrintSymbol}
 PROCEDURE FindSymbol(VAR ChoosedMatrix: Matrix);{WriteSymbol}
 VAR
@@ -47,11 +47,13 @@ BEGIN
       'H', 'h': ChoosedMatrix := [1, 5, 6, 10, 11, 12, 13, 14, 15, 16, 20, 21, 25];
       'I', 'i': ChoosedMatrix := [1, 2, 3, 4, 5, 8, 13, 18, 21, 22, 23, 24, 25];
       'L', 'l': ChoosedMatrix := [1, 6, 11, 16, 21, 22, 23, 24, 25]; 
-      'Z', 'z': ChoosedMatrix := [1, 2, 3, 4, 5, 9, 12, 16, 21, 22, 23, 24, 25]
+      'Z', 'z': ChoosedMatrix := [1, 2, 3, 4, 5, 9, 12, 16, 21, 22, 23, 24, 25];
+      ELSE
+        WRITELN('Char not found')
     END                       
 END;{WriteSymbol}
 BEGIN
-  MainMatrix := [];
+  MainMatrix := [Min .. Max];
   FindSymbol(MainMatrix);
   PrintSymbol(MainMatrix)
 END.{Print}    

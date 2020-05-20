@@ -3,7 +3,8 @@ PROGRAM Decryption(INPUT, OUTPUT);
   и печатает новые символы в OUTPUT}
 CONST
   Len = 20;
-  NewCode = ['A' .. 'Z'] + [' ']; 
+  NewCode = [' ' .. 'Z'];
+  ValidCode = [' ', 'A' .. 'Z']; 
 TYPE
   Str = ARRAY [1 .. Len] OF 'A' .. 'Z';
   Chiper = ARRAY [CHAR] OF ' ' .. 'Z';
@@ -12,26 +13,28 @@ VAR
   Code: Chiper;
   Length: INTEGER;
   CodeFile: TEXT;
+  ErrorInFile: BOOLEAN;
   
-PROCEDURE Initialize(VAR Code: Chiper; VAR ChiperFile: TEXT);
+PROCEDURE Initialize(VAR Code: Chiper; VAR ChiperFile: TEXT;  VAR Error: BOOLEAN);
 VAR
   Ch, CodeCh: CHAR;
 {присвоить Code шифр замены}
 BEGIN {Initialize}
-  WHILE NOT EOLN(ChiperFile)
+  Error := FALSE;
+  WHILE NOT EOLN(ChiperFile) AND (NOT(Error)) 
   DO
     BEGIN
-      IF (NOT EOLN(ChiperFile))
+      READ(ChiperFile, Ch);
+      IF (NOT EOLN(ChiperFile)) AND (Ch IN ValidCode)
       THEN
         BEGIN
-          READ(ChiperFile, Ch);
-          IF (NOT EOLN(ChiperFile))
+          READ(ChiperFile, CodeCh);
+          IF CodeCh IN NewCode
           THEN
-            BEGIN
-              READ(ChiperFile, CodeCh);
-              Code[CodeCh] := Ch
-            END 
-        END;
+            Code[CodeCh] := Ch
+          ELSE
+            Error := TRUE     
+        END; 
       READLN(ChiperFile)  
     END
 END;  {Initialize}
@@ -56,10 +59,11 @@ BEGIN {Encode}
 END;  {Encode}
  
 BEGIN {Encryption}
+  ErrorInFile := FALSE;
   {Инициализировать Code}
   ASSIGN(CodeFile, 'ChiperFile.TXT');
   RESET(CodeFile);
-  Initialize(Code, CodeFile);
+  Initialize(Code, CodeFile, ErrorInFile);
   WHILE NOT EOF
   DO
     BEGIN
@@ -70,13 +74,23 @@ BEGIN {Encryption}
         BEGIN
           Length := Length + 1;
           READ(Msg[Length]);
-          WRITE(Msg[Length])
+          IF Msg[Length] IN ValidCode
+          THEN
+            WRITE(Msg[Length])
+          ELSE
+            ErrorInFile := TRUE 
         END;
       READLN;
       WRITELN;
       {Распечатать кодированное сообщение}
-      Decode(Msg, Length);
-      WRITELN('длинна входной строки = ', Length)
+      IF NOT(ErrorInFile)
+      THEN
+        BEGIN
+          Decode(Msg, Length);
+          WRITELN('длинна входной строки = ', Length)
+        END 
+      ELSE
+        WRITELN('Misstake')          
     END
 END.  {Encryption}
 
