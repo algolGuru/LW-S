@@ -21,7 +21,7 @@ VAR
 {ïðèñâîèòü Code øèôð çàìåíû}
 BEGIN {Initialize}
   Error := FALSE;
-  WHILE NOT EO(ChiperFile) AND (NOT(Error)) 
+  WHILE NOT EOF(ChiperFile) AND (NOT(Error)) 
   DO
     BEGIN
       READ(ChiperFile, Ch);
