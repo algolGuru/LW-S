@@ -66,33 +66,37 @@ BEGIN {Encryption}
   ASSIGN(CodeFile, 'ChiperFile.TXT');
   RESET(CodeFile);
   Initialize(Code, CodeFile, ErrorInFile);
-  WHILE NOT EOF
-  DO
-    BEGIN
-      {÷èòàòü ñòðîêó â  Msg è ðàñïå÷àòàòü åå}
-      Length := 0;
-      WHILE NOT EOLN AND (Length < Len)
-      DO
-        BEGIN
-          Length := Length + 1;
-          READ(Msg[Length]);
-          IF Msg[Length] IN ValidCode
-          THEN
-            WRITE(Msg[Length])
-          ELSE
-            ErrorInFile := TRUE 
-        END;
-      READLN;
-      WRITELN;
-      {Ðàñïå÷àòàòü êîäèðîâàííîå ñîîáùåíèå}
-      IF NOT(ErrorInFile)
-      THEN
-        BEGIN
-          Decode(Msg, Length);
-          WRITELN('äëèííà âõîäíîé ñòðîêè = ', Length)
-        END 
-      ELSE
-        WRITELN('Misstake')          
-    END
+  IF NOT(ErrorInFile)
+  THEN
+    WHILE NOT EOF
+    DO
+      BEGIN
+        {÷èòàòü ñòðîêó â  Msg è ðàñïå÷àòàòü åå}
+        Length := 0;
+        WHILE NOT EOLN AND (Length < Len)
+        DO
+          BEGIN
+            Length := Length + 1;
+            READ(Msg[Length]);
+            IF Msg[Length] IN ValidCode
+            THEN
+              WRITE(Msg[Length])
+            ELSE
+              ErrorInFile := TRUE 
+          END;
+        READLN;
+        WRITELN;
+        {Ðàñïå÷àòàòü êîäèðîâàííîå ñîîáùåíèå}
+        IF NOT(ErrorInFile)
+        THEN
+          BEGIN
+            Decode(Msg, Length);
+            WRITELN('äëèííà âõîäíîé ñòðîêè = ', Length)
+          END 
+        ELSE
+          WRITELN('Misstake')          
+      END
+  ELSE
+    WRITELN('Misstake')
 END.  {Encryption}
 
