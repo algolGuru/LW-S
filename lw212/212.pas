@@ -1,6 +1,6 @@
 PROGRAM Encryption(INPUT, OUTPUT);
-{Переводит символы из INPUT в код согласно Chiper 
-  и печатает новые символы в OUTPUT}
+{ГЏГҐГ°ГҐГўГ®Г¤ГЁГІ Г±ГЁГ¬ГўГ®Г«Г» ГЁГ§ INPUT Гў ГЄГ®Г¤ Г±Г®ГЈГ«Г Г±Г­Г® Chiper 
+  ГЁ ГЇГҐГ·Г ГІГ ГҐГІ Г­Г®ГўГ»ГҐ Г±ГЁГ¬ГўГ®Г«Г» Гў OUTPUT}
 CONST
   Len = 20;
   NewCode = [' ' .. 'Z'];
@@ -18,10 +18,10 @@ VAR
 PROCEDURE Initialize(VAR Code: Chiper; VAR ChipperFile: TEXT; VAR Error: BOOLEAN);
 VAR
   Ch, CodeCh: CHAR;
-{присвоить Code шифр замены}
+{ГЇГ°ГЁГ±ГўГ®ГЁГІГј Code ГёГЁГґГ° Г§Г Г¬ГҐГ­Г»}
 BEGIN {Initialize}
   Error := FALSE;
-  WHILE NOT EOF(ChipperFile) AND NOT(Error)
+  WHILE NOT EOF(ChipperFile) AND (NOT(Error))
   DO
     BEGIN
       READ(ChipperFile, Ch);
@@ -42,7 +42,7 @@ BEGIN {Initialize}
 END;  {Initialize}
  
 PROCEDURE Encode(VAR S: Str; VAR Length: INTEGER);
-{выводит символы из Code, соотвтетсвующие символам из S}
+{ГўГ»ГўГ®Г¤ГЁГІ Г±ГЁГ¬ГўГ®Г«Г» ГЁГ§ Code, Г±Г®Г®ГІГўГІГҐГІГ±ГўГіГѕГ№ГЁГҐ Г±ГЁГ¬ГўГ®Г«Г Г¬ ГЁГ§ S}
 VAR
   Index: 1 .. Len;
 BEGIN {Encode}
@@ -62,7 +62,7 @@ END;  {Encode}
  
 BEGIN {Encryption}
   ErrorInFile := FALSE;
-  {Инициализировать Code}
+  {Г€Г­ГЁГ¶ГЁГ Г«ГЁГ§ГЁГ°Г®ГўГ ГІГј Code}
   ASSIGN(CodeFile, 'ChiperFile.TXT');
   RESET(CodeFile);
   Initialize(Code, CodeFile, ErrorInFile);
@@ -71,7 +71,7 @@ BEGIN {Encryption}
     WHILE NOT(EOF) AND NOT(ErrorInFile)
     DO
       BEGIN
-        {читать строку в  Msg и распечатать ее}
+        {Г·ГЁГІГ ГІГј Г±ГІГ°Г®ГЄГі Гў  Msg ГЁ Г°Г Г±ГЇГҐГ·Г ГІГ ГІГј ГҐГҐ}
         Length := 0;
         WHILE NOT EOLN AND (Length < Len)
         DO
@@ -86,12 +86,12 @@ BEGIN {Encryption}
           END;
         READLN;
         WRITELN;
-        {Распечатать кодированное сообщение}
+        {ГђГ Г±ГЇГҐГ·Г ГІГ ГІГј ГЄГ®Г¤ГЁГ°Г®ГўГ Г­Г­Г®ГҐ Г±Г®Г®ГЎГ№ГҐГ­ГЁГҐ}
         IF NOT(ErrorInFile)
         THEN
           BEGIN
             Encode(Msg, Length);
-            WRITELN('длинна входной строки = ', Length)
+            WRITELN('Г¤Г«ГЁГ­Г­Г  ГўГµГ®Г¤Г­Г®Г© Г±ГІГ°Г®ГЄГЁ = ', Length)
           END
         ELSE
           WRITELN('Misstake')  
