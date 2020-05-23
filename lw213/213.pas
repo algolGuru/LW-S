@@ -34,7 +34,9 @@ BEGIN {Initialize}
             Code[CodeCh] := Ch
           ELSE
             Error := TRUE     
-        END; 
+        END
+      ELSE
+        Error := TRUE;
       READLN(ChiperFile)  
     END
 END;  {Initialize}
