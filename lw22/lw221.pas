@@ -17,54 +17,144 @@ VAR
   Extra: CHAR;
   Found: BOOLEAN;
 BEGIN {InsertionSort}
-  First := 0;
   Index := 0;
-  WHILE NOT EOLN      
+  Prev := 0;
+  Curr := 0;
+  First := 0;
+  WGILE NOT EOLN 
   DO
-    BEGIN  {WHILE}
-      {Помещать запись в список, если позволяет пространство, 
-      иначе игнорировать и сообщать об ошибке}
+    BEGIN
+      Index :=    
+        
+    END;
+END.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  First := 0;
+  Curr := 0;
+  Prev := 0;
+  Index := 0;
+  WHILE NOT EOLN
+  DO
+    BEGIN
       Index := Index + 1;
-      IF Index <= Max
+      If Index > Max 
       THEN
+        WRITELN('Пиздец ты даун чел')
+      ELSE
         BEGIN
-          READ(Arr[Index].Key);
-          {Включение Arr[Index] в связанный список}
-          Prev := 0;
+          Read(Arr[Index].Key);
           Curr := First;
-          {Найти значения Prev и Curr, если существуют такие что
-	  Arr[Prev].Key  <= Arr[Index].Key <= Arr[Curr].Key}
+          Prev := 0;
           Found := FALSE;
-          WHILE (Curr <> 0) AND NOT Found
+          WHILE Curr <> 0 AND NOT Found
           DO
-            IF Arr[Index].Key > Arr[Curr].Key
-            THEN
-              BEGIN
-                Prev := Curr;
-                Curr := Arr[Curr].Next
-              END
-            ELSE
-              Found := True;
+            BEGIN
+              IF Arr[Index].Key <= Arr[Curr].Key
+              THEN
+                Found := TRUE
+              ELSE
+                BEGIN
+                  Prev := Curr;
+                  Curr := Arr[Curr].Next;                
+                END; 
+            END;
           Arr[Index].Next := Curr;
-          IF Prev = 0  {Первый элемент в списке}
+          IF Prev = 0
           THEN
             First := Index
           ELSE
-            Arr[Prev].Next := Index
-        END
-      ELSE
-        BEGIN
-          READ(Extra);
-          WRITELN('Сообщение содержит: ', Extra, '. Игнорируем.');
-        END
-    END; {WHILE}
-  {Печать списка начиная с Arr[First]}
-  Index := First;
-  WHILE Index <> 0
-  DO
-    BEGIN
-      WRITE(Arr[Index].Key);  
-      Index := Arr[Index].Next
-    END;
-  WRITELN
-END.  {InsertionSort}
+            Arr[Prev].Next := Index;                   
+        END;
+        
+    
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+          
+  
