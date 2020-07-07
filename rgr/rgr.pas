@@ -7,7 +7,7 @@ VAR
   FInput, FOutput: TEXT;
   Leaves: INTEGER; 
 PROCEDURE GetStatistic(VAR FInput, FOutput: TEXT);
-BEGIN
+BEGIN {GetStatistic}
   RESET(FInput);
   REWRITE(FOutput);
   WHILE NOT EOF(FInput)
@@ -20,9 +20,9 @@ BEGIN
     END;
   PrintTree(FOutput, Root);
   ClearTree(Root)  
-END;
-BEGIN
+END; {GetStatistic}
+BEGIN {CountWords}
   ASSIGN(FInput, 'Fin.txt');
   ASSIGN(FOutput, 'Fout.TXT');
   GetStatistic(FInput, FOutput)                
-END.
+END. {CountWords}

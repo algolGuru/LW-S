@@ -2,9 +2,9 @@ UNIT ReadUnit;
 
 INTERFACE
 
-FUNCTION ReadWord(VAR FIn: TEXT): STRING;
+FUNCTION ReadWord(VAR FIn: TEXT): STRING; {collects the word}
 
-FUNCTION IsFoundWord(VAR Word: STRING): BOOLEAN;      
+FUNCTION IsFoundWord(VAR Word: STRING): BOOLEAN; {It search for a word?}      
 
 IMPLEMENTATION
 CONST
@@ -12,23 +12,23 @@ CONST
   UpperCaseSymbols = ['A' .. 'Z'] + ['À' .. 'ß'];
   
 PROCEDURE SymbolToLower(VAR Ch: CHAR);
-BEGIN
+BEGIN {SymbolToLower}
   IF Ch IN UpperCaseSymbols
   THEN
     Ch := chr(ord(Ch) + 32) 
-END;
+END; {SymbolToLower}
 
 FUNCTION IsFoundWord(VAR Word: STRING): BOOLEAN;
-BEGIN
+BEGIN {IsFoundWord}
   IF Word <> ''
   THEN
     IsFoundWord := TRUE
   ELSE
     IsFoundWord := FALSE    
-END;
+END; {IsFoundWord}
 
 FUNCTION ReadWord(VAR FIn: TEXT): STRING;
-VAR
+VAR {ReadWord}
   Ch: CHAR;
   Word: STRING; 
 BEGIN
@@ -60,7 +60,7 @@ BEGIN
         Word := Word + Ch;
     END; 
     ReadWord := Word   
-END;
+END; {ReadWord}
   
 BEGIN     
 END.

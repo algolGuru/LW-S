@@ -9,11 +9,11 @@ TYPE
                LLink, RLink: Tree
              END;
 
-PROCEDURE Insert(VAR Ptr: Tree; Data: STRING; VAR LeavesCounter: INTEGER);
+PROCEDURE Insert(VAR Ptr: Tree; Data: STRING; VAR LeavesCounter: INTEGER); {Inserts a word into the tree}
 
-PROCEDURE PrintTree(VAR FOut: TEXT; VAR Ptr: Tree);
+PROCEDURE PrintTree(VAR FOut: TEXT; VAR Ptr: Tree); {Prints the tree to a file}
 
-PROCEDURE ClearTree(VAR Ptr: Tree);      
+PROCEDURE ClearTree(VAR Ptr: Tree); {Clears the tree}     
 
 IMPLEMENTATION
 CONST
@@ -24,7 +24,7 @@ VAR
   Root: Tree;
 
 PROCEDURE Insert(VAR Ptr: Tree; Data: STRING; VAR LeavesCounter: INTEGER);
-BEGIN                        
+BEGIN {Insert}                       
   IF LeavesCounter <= LeavesMax
   THEN   
     IF Ptr = NIL
@@ -49,7 +49,7 @@ BEGIN
           ELSE
             Insert(Ptr^.RLink, Data, LeavesCounter)    
       END  
-END;
+END; {Insert}
 
 PROCEDURE PrintTree(VAR FOut: TEXT; VAR Ptr: Tree);
 BEGIN {PrintTree}
