@@ -14,7 +14,9 @@ BEGIN {GetStatistic}
   DO
     BEGIN
       Word := ReadWord(FInput);
-      Insert(Root, Word, Leaves);
+      IF NOT(WordIsEmpty(Word))
+      THEN
+        Insert(Root, Word, Leaves);
     END;
   PrintTree(FOutput, Root);
   ClearTree(Root)  
