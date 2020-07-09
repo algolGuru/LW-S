@@ -4,6 +4,7 @@ INTERFACE
 
 FUNCTION ReadWord(VAR FIn: TEXT): STRING; {collects the word}
      
+FUNCTION WordIsEmpty(VAR Word: STRING): BOOLEAN; {Checks the read word for empty space}
 
 IMPLEMENTATION
 CONST
@@ -16,6 +17,15 @@ BEGIN {SymbolToLower}
   THEN
     Ch := chr(ord(Ch) + 32) 
 END; {SymbolToLower}
+
+FUNCTION WordIsEmpty(VAR Word: STRING): BOOLEAN;
+BEGIN {IsFoundWord}
+  IF Word = ''
+  THEN
+    WordIsEmpty := TRUE
+  ELSE
+    WordIsEmpty := FALSE
+END; {IsFoundWord}
 
 FUNCTION ReadWord(VAR FIn: TEXT): STRING;
 VAR {ReadWord}
