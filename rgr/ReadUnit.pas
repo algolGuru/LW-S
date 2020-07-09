@@ -3,13 +3,12 @@ UNIT ReadUnit;
 INTERFACE
 
 FUNCTION ReadWord(VAR FIn: TEXT): STRING; {collects the word}
-
-FUNCTION IsFoundWord(VAR Word: STRING): BOOLEAN; {It search for a word?}      
+     
 
 IMPLEMENTATION
 CONST
-  Symbols = ['A' .. 'Z'] + ['a' .. 'z'] + ['À' .. 'ß'] + ['à' .. 'ÿ'];
-  UpperCaseSymbols = ['A' .. 'Z'] + ['À' .. 'ß'];
+  Symbols = ['A' .. 'Z'] + ['a' .. 'z'] + ['Ã€' .. 'ÃŸ'] + ['Ã ' .. 'Ã¿'];
+  UpperCaseSymbols = ['A' .. 'Z'] + ['Ã€' .. 'ÃŸ'];
   
 PROCEDURE SymbolToLower(VAR Ch: CHAR);
 BEGIN {SymbolToLower}
@@ -17,15 +16,6 @@ BEGIN {SymbolToLower}
   THEN
     Ch := chr(ord(Ch) + 32) 
 END; {SymbolToLower}
-
-FUNCTION IsFoundWord(VAR Word: STRING): BOOLEAN;
-BEGIN {IsFoundWord}
-  IF Word <> ''
-  THEN
-    IsFoundWord := TRUE
-  ELSE
-    IsFoundWord := FALSE    
-END; {IsFoundWord}
 
 FUNCTION ReadWord(VAR FIn: TEXT): STRING;
 VAR {ReadWord}
@@ -36,9 +26,9 @@ BEGIN
   IF NOT EOF(Fin)
   THEN
     READ(Fin, Ch);
-  IF (Ch = '¸') OR (Ch = '¨')
+  IF (Ch = 'Â¸') OR (Ch = 'Â¨')
       THEN
-        Ch := 'å';     
+        Ch := 'Ã¥';     
   IF Ch IN Symbols
   THEN
     SymbolToLower(Ch);
@@ -49,9 +39,9 @@ BEGIN
   DO
     BEGIN
       READ(Fin, Ch);
-      IF (Ch = '¸') OR (Ch = '¨')
+      IF (Ch = 'Â¸') OR (Ch = 'Â¨')
       THEN
-        Ch := 'å';      
+        Ch := 'Ã¥';      
       IF Ch IN UpperCaseSymbols
       THEN
         SymbolToLower(Ch);
